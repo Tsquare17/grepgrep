@@ -17,16 +17,33 @@ const (
 	info = "\033[36m"
 )
 
+const appHeader = info + appName + " " + version + reset
+
 func main() {
 	var versionInput bool
 	const versionUsage = "Show the version."
 	flag.BoolVar(&versionInput, "version", false, versionUsage)
 	flag.BoolVar(&versionInput, "v", false, versionUsage)
 
+	var helpInput bool
+	const helpUsage = "Show this help message."
+	flag.BoolVar(&helpInput, "help", false, helpUsage)
+	flag.BoolVar(&helpInput, "h", false, helpUsage)
+
 	flag.Parse()
 
 	if versionInput == true {
-		fmt.Println(info + appName + " " + version + reset)
+		fmt.Println(appHeader)
+		os.Exit(0)
+	}
+
+	if helpInput == true {
+		fmt.Println(appHeader)
+		fmt.Println("  Usage: grepgrep [STRING]...")
+		fmt.Println("  Example: grepgrep 'foo' 'bar' 'baz'")
+		fmt.Println("")
+
+		flag.PrintDefaults()
 		os.Exit(0)
 	}
 
